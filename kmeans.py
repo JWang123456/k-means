@@ -20,7 +20,7 @@ def initCentroids(dataSet, k):
   
 # k-means cluster 
 #dataSet为一个矩阵
-#k为将dataSet矩阵中的样本分成k个类 
+#k为将dataSet矩阵中的样本分成k个类
 def kmeans(dataSet, k):  
 	numSamples = dataSet.shape[0]  #读取矩阵dataSet的第一维度的长度,即获得有多少个样本数据
     # first column stores which cluster this sample belongs to,  
