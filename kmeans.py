@@ -2,8 +2,11 @@
 from numpy import *  
 import time  
 import matplotlib.pyplot as plt  
+import sys
   
-  
+k = 10
+dataSet = genfromtxt(sys.argv[1], delimiter=',', autostrip=True) # strip spaces
+
 # calculate Euclidean distance  
 def euclDistance(vector1, vector2):  
 	return sqrt(sum(power(vector2 - vector1, 2)))  #求这两个矩阵的距离，vector1、2均为矩阵
@@ -56,12 +59,18 @@ def kmeans(dataSet, k):
         ## step 4: update centroids  
 		for j in range(k):  
 			#clusterAssment[:,0].A==j是找出矩阵clusterAssment中第一列元素中等于j的行的下标，返回的是一个以array的列表，第一个array为等于j的下标
+			print('clusterAssment', clusterAssment[:, 0].A == j)
 			pointsInCluster = dataSet[nonzero(clusterAssment[:, 0].A == j)[0]] #将dataSet矩阵中相对应的样本提取出来 
+			print('\n', 'pointsInCluster', pointsInCluster)
 			centroids[j, :] = mean(pointsInCluster, axis = 0)  #计算标注为j的所有样本的平均值
+			break
+		break
   
 	print ('Congratulations, cluster complete!')  
 	return centroids, clusterAssment  
   
+kmeans(dataSet, k)
+
 # show your cluster only available with 2-D data 
 #centroids为k个类别，其中保存着每个类别的质心
 #clusterAssment为样本的标记，第一列为此样本的类别号，第二列为到此类别质心的距离 
