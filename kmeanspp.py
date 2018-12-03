@@ -4,9 +4,9 @@ from numpy import *
 import time  
 import matplotlib.pyplot as plt
 
-# if len(sys.argv) != 5:
-#     print('usage: ', sys.argv[0], 'data_file k r output_file')
-#     sys.exit()
+if len(sys.argv) != 5:
+    print('usage: ', sys.argv[0], 'data_file k r output_file')
+    sys.exit()
 
 #Read inputs.
 
