@@ -5,8 +5,6 @@
 
 import sys
 import numpy as np
-
-# import pandas as pd
 import random
 import operator
 import math
@@ -20,23 +18,13 @@ if len(sys.argv) != 5:
 
 # one row one data point, columns are dimentions
 dataSet = np.genfromtxt(sys.argv[1], delimiter=',', autostrip=True) # strip spaces
-df = dataSet
+
 # separate or clustering data int to k groups, clusters.
-# what ever you call it
 k = int(sys.argv[2])
 
 # r iterations: run the algorithm r times.
 # at each time the algorithm should converge
 r = int(sys.argv[3])
-
-# df_full = pd.read_csv("SPECTF_New.csv")
-# columns = list(df_full.columns)
-# features = columns[:len(columns)-1]
-# class_labels = list(df_full[columns[-1]])
-# df = df_full[features]
-
-# Number of Attributes
-num_attr = len(dataSet[0])
 
 # Number of data points
 n = len(dataSet)
@@ -63,7 +51,7 @@ def calculateClusterCenter(membership_mat):
         denominator = sum(xraised)
         temp_num = list()
         for i in range(n):
-            data_point = list(df[i, :])
+            data_point = list(dataSet[i, :])
             prod = [xraised[i] * val for val in data_point]
             temp_num.append(prod)
         numerator = map(sum, zip(*temp_num))
@@ -74,12 +62,11 @@ def calculateClusterCenter(membership_mat):
 # calculate Euclidean distance  
 def euclDistance(vector1, vector2):  
 	return abs(sum(np.power(list(map(lambda x, y: x - y, vector2, vector1)), 2)))
-    # result = map(lambda x, y: x + y, numbers1, numbers2)
 
 def updateMembershipValue(membership_mat, cluster_centers):
     p = float(2/(m-1))
     for i in range(n):
-        x = list(df[i, :])
+        x = list(dataSet[i, :])
         distances = [euclDistance(x, cluster_centers[j]) for j in range(k)]
         for j in range(k):
             den = sum([math.pow(float(distances[j]/distances[c]), p) for c in range(k)])
@@ -103,14 +90,20 @@ def fuzzyCMeansClustering():
         cluster_centers = calculateClusterCenter(membership_mat)
         membership_mat = updateMembershipValue(membership_mat, cluster_centers)
         cluster_labels = getClusters(membership_mat)
+
+        print(f'Iteration {curr} complete!')  
+        
+        err = 0
+        for i in range(n):
+            err += np.sqrt(sum(np.power(cluster_centers[cluster_labels[i]] - dataSet[i], 2)))
+        print(err) 
+        
         curr += 1
-    # print(membership_mat)
-    return cluster_labels, cluster_centers
+    return cluster_labels
 
 
-labels, centers = fuzzyCMeansClustering()
+labels = fuzzyCMeansClustering()
 
 #Save output in a comma separated file. 
 #File name should pass from command line.
-
 np.savetxt(sys.argv[4], labels, delimiter=',')
