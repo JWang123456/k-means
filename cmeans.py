@@ -85,20 +85,20 @@ def getClusters(membership_mat):
 def fuzzyCMeansClustering():
     # Membership Matrix
     membership_mat = initializeMembershipMatrix()
-    curr = 0
-    while curr <= r:
+    num = 0
+    while num <= r:
         cluster_centers = calculateClusterCenter(membership_mat)
         membership_mat = updateMembershipValue(membership_mat, cluster_centers)
         cluster_labels = getClusters(membership_mat)
 
-        print(f'Iteration {curr} complete!')  
+        print(f'Iteration {num} complete!')  
         
         err = 0
         for i in range(n):
             err += np.sqrt(sum(np.power(cluster_centers[cluster_labels[i]] - dataSet[i], 2)))
         print(err) 
         
-        curr += 1
+        num += 1
     return cluster_labels
 
 

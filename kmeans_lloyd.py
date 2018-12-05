@@ -81,8 +81,8 @@ def kmeansIter(dataSet, k, r):
 		
 		err = 0
 		for i in clusterAssment[:, 1]:
-			err += i		
-		print(err) 
+			err += float(i)		
+		print(err)
 		
 		num += 1
 	
