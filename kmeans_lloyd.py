@@ -45,7 +45,7 @@ def kmeansIter(dataSet, k, r):
 		# first column stores which cluster this sample belongs to,  
 		# second column stores the error between this sample and its centroid  
 		clusterAssment = mat(zeros((numSamples, 2)))
-		clusterChanged = True  
+		clusterChanged = True
 	
 		## step 1: init centroids  
 		centroids = initCentroids(dataSet, k)
